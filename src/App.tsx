@@ -25,13 +25,12 @@ function App() {
         
         <div className="hero">
           {CourseNames.map((course, index) => (
-            <Card key={index} title={course.name} description={course.description} />
-            // index < 5 && (
-            //   <div key={index}>
-            //     <h1 className="title">{course.name}</h1>
-            //     <p>{course.description}</p>
-            //   </div>
-            // )
+            <Card key={index} 
+            title={course.name} 
+            description={course.description} 
+            cousreCount={index + 1} 
+            addtoCart={(value:any) => console.log(`Added ${course.name} to cart: ${value}`)} 
+            />
           ))}
         </div>
         <div>
