@@ -1,0 +1,52 @@
+.card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px;
+  border-color: var(--accent-border);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-h);
+}
+
+.card-description {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-h);
+  background-color: var(--accent-bg);
+  border: 2px solid var(--accent-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.card-button:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.card-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
