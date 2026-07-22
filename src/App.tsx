@@ -3,6 +3,7 @@ import './App.css';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Card from './Cards/Cards';
+import ProductList from './Components/Products/Products';
 type Product = {
   name: string;
   description: string;
@@ -88,6 +89,10 @@ function App() {
             </li>
           ))}
         </ul>
+      </div>
+      <div>
+        <h2>Product List</h2>
+        <ProductList />
       </div>
       <Footer />
     </>
