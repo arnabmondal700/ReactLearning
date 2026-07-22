@@ -3,13 +3,13 @@ type CardProps = {
     title: string;
     description: string;
     productCount?: number;
-    addtoCart?: (value: any) => void;
+    addtoCart?: (value?: any) => void;
 };
 
 export default function Card({ title, description, productCount, addtoCart }: CardProps) {
     const handleAddToCart = () => {
         if (addtoCart) {
-            addtoCart(title);
+        addtoCart();
         } else {
             console.log(`Added ${title} to cart`);
         }

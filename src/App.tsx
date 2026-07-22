@@ -63,12 +63,12 @@ function App() {
       <section id="center">
         
         <div className="hero">
-          {productNames.map((product, index) => (
+          {products.map((product, index) => (
             <Card key={index} 
             title={product.name} 
             description={product.description} 
             productCount={product.productCount} 
-            addtoCart={(value) => addToCart(product, value)} 
+            addtoCart={() => addToCart(product, true)} 
             />
           ))}
         </div>
