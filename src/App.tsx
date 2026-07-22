@@ -31,14 +31,13 @@ function App() {
       if (cartItems.length === 0) {
         setCartItems([...cartItems, { name: product.name, description: product.description, productCount: 1 }]);
       } else {
-        let itemExists = false;
-        cartItems.map((item) => {
-          if (item.name === product.name && products[products.findIndex((p) => p.name === product.name)].productCount > 0) {
-            item.productCount += 1;
-            itemExists = true;
-          }
-        });
-        if (!itemExists && products[products.findIndex((p) => p.name === product.name)].productCount > 0) {
+        const existingIndex = cartItems.findIndex((item) => item.name === product.name);
+        if (existingIndex !== -1 && products[products.findIndex((p) => p.name === product.name)].productCount > 0) {
+          const updatedCartItems = cartItems.map((item, index) =>
+            index === existingIndex ? { ...item, productCount: item.productCount + 1 } : item
+          );
+          setCartItems(updatedCartItems);
+        } else if (products[products.findIndex((p) => p.name === product.name)].productCount > 0) {
           setCartItems([...cartItems, { name: product.name, description: product.description, productCount: 1 }]);
         }
       }
