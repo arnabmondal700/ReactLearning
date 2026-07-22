@@ -55,6 +55,13 @@ function App() {
   };
   const removeFromCart = (product: Product) => {
     setCartItems(cartItems.filter((item) => item.name !== product.name));
+    const updatedProducts = products.map((item) => {
+      if (item.name === product.name) {
+        return { ...item, productCount: item.productCount + product.productCount };
+      }
+      return item;
+    });
+    setProducts(updatedProducts);
   };
   return (
     <>
@@ -76,7 +83,9 @@ function App() {
         <h2>Shopping Cart</h2>
         <ul>
           {cartItems.map((item, index) => (
-            <li key={index}>{item.name} - {item.productCount}</li>
+            <li key={index}>{item.name} - {item.productCount}
+              <button className="remove-button" onClick={() => removeFromCart(item)}>Remove</button>
+            </li>
           ))}
         </ul>
       </div>

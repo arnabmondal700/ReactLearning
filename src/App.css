@@ -34,3 +34,26 @@
     padding: 0 16px;
   }
 }
+
+.remove-button {
+  font-size: 14px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: #ffffff;
+  background: #e53935;
+  border: 2px solid transparent;
+  transition: background 0.2s, border-color 0.2s, transform 0.05s;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background: #c62828;
+  border-color: #b71c1c;
+}
+
+.remove-button:focus-visible {
+  outline: 2px solid #e53935;
+  outline-offset: 2px;
+}
+
