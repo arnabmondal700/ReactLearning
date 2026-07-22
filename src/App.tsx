@@ -3,36 +3,36 @@ import './App.css';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Card from './Cards/Cards';
-
+type Product = {
+  name: string;
+  description: string;
+  productCount: number;
+};
 
 function App() {
   const [count, setCount] = useState(0);
   let nameString = "Vite + React";
-  let productNames= [{ name: "Potato" , description: "Potatoes are a starchy vegetable that are a staple food in many cultures. They can be prepared in a variety of ways, including boiling, baking, and frying.", productCount: 5 },
-  { name: "Ginger" , description: "Ginger is a flowering plant whose rhizome, ginger root or ginger, is widely used as a spice and a folk medicine. It is a herbaceous perennial which grows annual pseudostems about one meter tall bearing narrow leaf blades.", productCount: 3 },
-  { name: "Tomato" , description: "The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as a tomato plant. The species originated in western South America and Central America.", productCount: 8 },
-  { name: "Onion" , description: "The onion (Allium cepa L., from Latin cepa 'onion') is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion.", productCount: 4 },
-  { name: "Carrot" , description: "The carrot (Daucus carota subsp. sativus) is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. Carrots are a domesticated form of the wild carrot, Daucus carota, native to Europe and southwestern Asia.", productCount: 6 }];
+  let productNames = [{ name: "Potato", description: "Potatoes are a starchy vegetable that are a staple food in many cultures. They can be prepared in a variety of ways, including boiling, baking, and frying.", productCount: 5 },
+  { name: "Ginger", description: "Ginger is a flowering plant whose rhizome, ginger root or ginger, is widely used as a spice and a folk medicine. It is a herbaceous perennial which grows annual pseudostems about one meter tall bearing narrow leaf blades.", productCount: 3 },
+  { name: "Tomato", description: "The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as a tomato plant. The species originated in western South America and Central America.", productCount: 8 },
+  { name: "Onion", description: "The onion (Allium cepa L., from Latin cepa 'onion') is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion.", productCount: 4 },
+  { name: "Carrot", description: "The carrot (Daucus carota subsp. sativus) is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. Carrots are a domesticated form of the wild carrot, Daucus carota, native to Europe and southwestern Asia.", productCount: 6 }];
   let headerLinks: { name: string; href: string }[] = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
     { name: "Contact", href: "#contact" },
   ];
-  type Product = {
-    name: string;
-    description: string;
-    productCount: number;
-  };
+
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [products, setProducts] = useState(productNames);
-  const addToCart = (product: Product, value: any) => {
-    if(value) {
-      console.log(`$cartItems: `,cartItems);
-      if(cartItems.length === 0) {
+  const addToCart = (product: Product, value: boolean) => {
+    if (value) {
+      console.log(`$cartItems: `, cartItems);
+      if (cartItems.length === 0) {
         setCartItems([...cartItems, { name: product.name, description: product.description, productCount: 1 }]);
       } else {
         let itemExists = false;
-        cartItems.forEach((item) => {
+        cartItems.map((item) => {
           if (item.name === product.name && products[products.findIndex((p) => p.name === product.name)].productCount > 0) {
             item.productCount += 1;
             itemExists = true;
@@ -42,7 +42,7 @@ function App() {
           setCartItems([...cartItems, { name: product.name, description: product.description, productCount: 1 }]);
         }
       }
-      if(products.length > 0) {
+      if (products.length > 0) {
         const updatedProducts = products.map((item) => {
           if (item.name === product.name && item.productCount > 0) {
             return { ...item, productCount: item.productCount - 1 };
@@ -50,7 +50,7 @@ function App() {
           return item;
         });
         setProducts(updatedProducts);
-        console.log(`$products: `,products);
+        console.log(`$products: `, products);
       }
     }
   };
@@ -61,14 +61,14 @@ function App() {
     <>
       <Header links={headerLinks} title={nameString} />
       <section id="center">
-        
+
         <div className="hero">
           {products.map((product, index) => (
-            <Card key={index} 
-            title={product.name} 
-            description={product.description} 
-            productCount={product.productCount} 
-            addtoCart={() => addToCart(product, true)} 
+            <Card key={index}
+              title={product.name}
+              description={product.description}
+              productCount={product.productCount}
+              addtoCart={() => addToCart(product, true)}
             />
           ))}
         </div>

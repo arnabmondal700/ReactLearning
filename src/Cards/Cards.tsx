@@ -3,7 +3,7 @@ type CardProps = {
     title: string;
     description: string;
     productCount?: number;
-    addtoCart?: (value?: any) => void;
+    addtoCart?: (value?: boolean) => void;
 };
 
 export default function Card({ title, description, productCount, addtoCart }: CardProps) {
