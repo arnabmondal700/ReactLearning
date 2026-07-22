@@ -8,45 +8,79 @@ import Card from './Cards/Cards';
 function App() {
   const [count, setCount] = useState(0);
   let nameString = "Vite + React";
-  let CourseNames= [{ name: "Vite + React" , description: "Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects. React is a JavaScript library for building user interfaces."},
-  { name: "React + TypeScript" , description: "TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. It offers static typing, classes, and interfaces, which can help catch errors early and improve code quality."},
-  { name: "React + Redux" , description: "Redux is a predictable state container for JavaScript apps. It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test."},
-  { name: "React + React Router" , description: "React Router is a standard library for routing in React. It enables the navigation among views of various components in a React Application, allows changing the browser URL, and keeps the UI in sync with the URL."},
-  { name: "React + Jest" , description: "Jest is a delightful JavaScript Testing Framework with a focus on simplicity. It works with projects using Babel, TypeScript, Node.js, React, Angular, Vue.js and Svelte and more!"}];
+  let productNames= [{ name: "Potato" , description: "Potatoes are a starchy vegetable that are a staple food in many cultures. They can be prepared in a variety of ways, including boiling, baking, and frying.", productCount: 5 },
+  { name: "Ginger" , description: "Ginger is a flowering plant whose rhizome, ginger root or ginger, is widely used as a spice and a folk medicine. It is a herbaceous perennial which grows annual pseudostems about one meter tall bearing narrow leaf blades.", productCount: 3 },
+  { name: "Tomato" , description: "The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as a tomato plant. The species originated in western South America and Central America.", productCount: 8 },
+  { name: "Onion" , description: "The onion (Allium cepa L., from Latin cepa 'onion') is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, shallot, leek, chive, and Chinese onion.", productCount: 4 },
+  { name: "Carrot" , description: "The carrot (Daucus carota subsp. sativus) is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. Carrots are a domesticated form of the wild carrot, Daucus carota, native to Europe and southwestern Asia.", productCount: 6 }];
   let headerLinks: { name: string; href: string }[] = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
     { name: "Contact", href: "#contact" },
   ];
+  type Product = {
+    name: string;
+    description: string;
+    productCount: number;
+  };
+  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [products, setProducts] = useState(productNames);
+  const addToCart = (product: Product, value: any) => {
+    if(value) {
+      console.log(`$cartItems: `,cartItems);
+      if(cartItems.length === 0) {
+        setCartItems([...cartItems, { name: product.name, description: product.description, productCount: 1 }]);
+      } else {
+        let itemExists = false;
+        cartItems.forEach((item) => {
+          if (item.name === product.name) {
+            item.productCount += 1;
+            itemExists = true;
+          }
+        });
+        if (!itemExists) {
+          setCartItems([...cartItems, { name: product.name, description: product.description, productCount: 1 }]);
+        }
+      }
+      if(products.length > 0) {
+        const updatedProducts = products.map((item) => {
+          if (item.name === product.name) {
+            return { ...item, productCount: item.productCount - 1 };
+          }
+          return item;
+        });
+        setProducts(updatedProducts);
+        console.log(`$products: `,products);
+      }
+    }
+  };
+  const removeFromCart = (product: Product) => {
+    setCartItems(cartItems.filter((item) => item.name !== product.name));
+  };
   return (
     <>
       <Header links={headerLinks} title={nameString} />
       <section id="center">
         
         <div className="hero">
-          {CourseNames.map((course, index) => (
+          {productNames.map((product, index) => (
             <Card key={index} 
-            title={course.name} 
-            description={course.description} 
-            cousreCount={index + 1} 
-            addtoCart={(value:any) => console.log(`Added ${course.name} to cart: ${value}`)} 
+            title={product.name} 
+            description={product.description} 
+            productCount={product.productCount} 
+            addtoCart={(value) => addToCart(product, value)} 
             />
           ))}
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
       </section>
+      <div>
+        <h2>Shopping Cart</h2>
+        <ul>
+          {cartItems.map((item, index) => (
+            <li key={index}>{item.name} - {item.productCount}</li>
+          ))}
+        </ul>
+      </div>
       <Footer />
     </>
   )

@@ -2,11 +2,11 @@ import "./Cards.css";
 type CardProps = {
     title: string;
     description: string;
-    cousreCount?: number;
+    productCount?: number;
     addtoCart?: (value: any) => void;
 };
 
-export default function Card({ title, description, cousreCount, addtoCart }: CardProps) {
+export default function Card({ title, description, productCount, addtoCart }: CardProps) {
     const handleAddToCart = () => {
         if (addtoCart) {
             addtoCart(title);
@@ -17,8 +17,8 @@ export default function Card({ title, description, cousreCount, addtoCart }: Car
     return (
         <div className="card">
             <h2 className="card-title">{title}</h2>
-            {cousreCount !== undefined && (
-                <p className="card-cousreCount">Courses: {cousreCount}</p>
+            {productCount !== undefined && (
+                <p className="card-productCount">Products: {productCount}</p>
             )}
             <p className="card-description">{description}</p>
             <button className="card-button" onClick={handleAddToCart}>
