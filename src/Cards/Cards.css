@@ -12,17 +12,52 @@
   border-color: var(--accent-border);
 }
 
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
 .card-title {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: bold;
+  margin-bottom: 6px;
+  color: var(--text-h);
+  line-height: 1.3;
+}
+
+.card-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 8px;
+}
+
+.card-stars {
+  color: #f59e0b;
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
+.card-rate {
+  font-weight: 600;
+  font-size: 0.9rem;
   color: var(--text-h);
 }
 
-.card-description {
-  font-size: 1rem;
+.card-count {
+  font-size: 0.85rem;
   color: var(--text);
-  margin-bottom: 16px;
+}
+
+.card-description {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1.5;
 }
 
 .card-button {

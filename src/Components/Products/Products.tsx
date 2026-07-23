@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import Card from "../../Cards/Cards";
 
 type Product = {
     id: number;
@@ -7,32 +7,23 @@ type Product = {
     description: string;
     image: string;
     category: string;
-};
-export default function ProductList() {
-const [products, setProducts] = useState<Product[]>([]);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState("");
-
-useEffect(() => {
-    const fetchProducts = async () => {
-        try {
-            const response = await fetch("https://fakestoreapi.com/products");
-            if (!response.ok) {
-                throw new Error("Failed to fetch products");
-            }
-            const data = await response.json();
-            setProducts(data);
-            setLoading(false);
-        } catch (error) {
-            setError("Failed to fetch products");
-        } finally {
-            setLoading(false);
-        }
+    productCount: number;
+    rating: {
+        rate: number;
+        count: number;
     };
+};
 
-    fetchProducts();
-}, []);
+type ProductListProps = {
+    products: Product[];
+    loading: boolean;
+    error: string;
+    addToCart?: (product: Product, value: boolean) => void;
+};
 
+export type { Product };
+
+export default function ProductList({ products, loading, error, addToCart }: ProductListProps) {
     return (
         <div className="product-list">
             <h2>Product List</h2>
@@ -41,17 +32,19 @@ useEffect(() => {
             ) : error ? (
                 <p>{error}</p>
             ) : (
-                <ul>
+                <div className="hero">
                     {products.map((product) => (
-                        <li key={product.id}>
-                            <h3>{product.title}</h3>
-
-                            <p>{product.description}</p>
-                            <p>Price: ${product.price}</p>
-                            <img src={product.image} alt={product.title} width="100" />
-                        </li>
+                        <Card
+                            key={product.id}
+                            title={product.title}
+                            description={product.description}
+                            image={product.image}
+                            rating={product.rating}
+                            productCount={product.productCount}
+                            addtoCart={() => addToCart ? addToCart(product, true) : undefined}
+                        />
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
