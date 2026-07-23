@@ -101,8 +101,8 @@ function App() {
     <>
       <Header links={headerLinks} title={nameString} />
       <div>
-        <h2>Shopping Cart</h2>
-        <ul>
+        <h2 className="cart-title">Shopping Cart</h2>
+        <ul className="cart-list">
           {cartItems.map((item, index) => (
             <li key={index}>{item.title} - {item.productCount}
               <button className="remove-button" onClick={() => removeFromCart(item)}>Remove</button>
@@ -113,6 +113,7 @@ function App() {
       <div>
         <input
           type="text"
+          className="search-input"
           placeholder="Search products..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
