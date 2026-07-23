@@ -13,10 +13,11 @@ function App() {
     { name: "Contact", href: "#contact" },
   ];
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -30,7 +31,7 @@ function App() {
           ...product,
           productCount: 10,
         }));
-        setProducts(productsWithCount);
+        setAllProducts(productsWithCount);
         setLoading(false);
       } catch (error) {
         setError("Failed to fetch products");
@@ -44,9 +45,9 @@ function App() {
 
   const addToCart = (product: Product, value: boolean) => {
     if (value) {
-      // Decrease stock of the product
-      setProducts((prevProducts) =>
-        prevProducts.map((p) =>
+      // decrease stock of the product
+      setAllProducts((prevAll) =>
+        prevAll.map((p) =>
           p.id === product.id && p.productCount > 0
             ? { ...p, productCount: p.productCount - 1 }
             : p
@@ -68,14 +69,14 @@ function App() {
   };
 
   const removeFromCart = (product: Product) => {
-    // Increase stock of the product
-    setProducts((prevProducts) =>
-      prevProducts.map((p) =>
-        p.id === product.id
-          ? { ...p, productCount: p.productCount + 1 }
-          : p
-      )
-    );
+      // increase stock of the product
+      setAllProducts((prevAll) =>
+        prevAll.map((p) =>
+          p.id === product.id
+            ? { ...p, productCount: p.productCount + 1 }
+            : p
+        )
+      );
 
     // Decrease cart quantity or remove if 0
     setCartItems((prevCart) => {
@@ -108,8 +109,27 @@ function App() {
         </ul>
       </div>
       <div>
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+      <div>
         <h2>Product List</h2>
-        <ProductList products={products} loading={loading} error={error} addToCart={addToCart} />
+        <ProductList
+          products={
+            searchQuery
+              ? allProducts.filter((product) =>
+                  product.title.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+              : allProducts
+          }
+          loading={loading}
+          error={error}
+          addToCart={addToCart}
+        />
       </div>
       <Footer />
     </>

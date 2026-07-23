@@ -26,7 +26,6 @@ export type { Product };
 export default function ProductList({ products, loading, error, addToCart }: ProductListProps) {
     return (
         <div className="product-list">
-            <h2>Product List</h2>
             {loading ? (
                 <p>Loading products...</p>
             ) : error ? (
