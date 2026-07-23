@@ -1,4 +1,4 @@
-import Card from "../../Cards/Cards";
+import Card from "../../Components/Cards/Cards";
 
 type Product = {
     id: number;

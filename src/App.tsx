@@ -1,16 +1,20 @@
 import { useState, useEffect, useMemo } from 'react'
 import './App.css';
-import Header from './Header/Header';
-import Footer from './Footer/Footer';
-import ProductList from './Components/Products/Products';
-import type { Product } from './Components/Products/Products';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
+import ProductList from './Pages/Products/Products';
+import type { Product } from './Pages/Products/Products';
+import { Route, Router, Routes } from 'react-router-dom';
+import ProductDetails from './Pages/ProductDetails/ProductDetails';
+import Home from './Pages/Home/Home';
+import About from './Pages/About/About';
+import Cart from './Pages/Cart/Cart';
 
 function App() {
   let nameString = "Vite + React";
   let headerLinks: { name: string; href: string }[] = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" }
   ];
 
   const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -107,6 +111,12 @@ function App() {
   return (
     <>
       <Header links={headerLinks} title={nameString} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/product-details/:id" element={<ProductDetails />} />
+      </Routes>
       <div>
         <h2 className="cart-title">Shopping Cart</h2>
         <ul className="cart-list">

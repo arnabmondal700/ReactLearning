@@ -1,4 +1,5 @@
 import "./Header.css";
+import { Link } from "react-router-dom";
 type HeaderProps = {
     title?: string;
     links?: { name: string; href: string }[];
@@ -12,7 +13,7 @@ export default function Header({ title, links }: HeaderProps) {
                     <ul>
                         {links?.map((link:{ name: string; href: string }) => (
                             <li key={link.href}>
-                                <a href={link.href}>{link.name}</a>
+                                <Link to={link.href}>{link.name}</Link>
                             </li>
                         ))}
                     </ul>
