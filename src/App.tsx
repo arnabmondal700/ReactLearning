@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import './App.css';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -96,6 +96,13 @@ function App() {
       return prevCart;
     });
   };
+  const filteredProducts = useMemo(() => {
+    return searchQuery
+      ? allProducts.filter((product) =>
+          product.title.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : allProducts;
+  }, [searchQuery, allProducts]);
 
   return (
     <>
@@ -122,13 +129,7 @@ function App() {
       <div>
         <h2>Product List</h2>
         <ProductList
-          products={
-            searchQuery
-              ? allProducts.filter((product) =>
-                  product.title.toLowerCase().includes(searchQuery.toLowerCase())
-                )
-              : allProducts
-          }
+          products={filteredProducts}
           loading={loading}
           error={error}
           addToCart={addToCart}
