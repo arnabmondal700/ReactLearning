@@ -57,12 +57,14 @@ function App() {
       // Add to cart or increase cart quantity
       setCartItems((prevCart) => {
         const existingIndex = prevCart.findIndex((item) => item.title === product.title);
-        if (existingIndex !== -1) {
+        if (existingIndex !== -1 && 0 < product.productCount) {
           return prevCart.map((item, index) =>
             index === existingIndex ? { ...item, productCount: item.productCount + 1 } : item
           );
-        } else {
+        } else if (product.productCount > 0) {
           return [...prevCart, { ...product, productCount: 1 }];
+        } else {
+          return prevCart;
         }
       });
     }
