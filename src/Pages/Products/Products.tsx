@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Card from "../../Components/Cards/Cards";
 
 type Product = {
@@ -24,6 +25,10 @@ type ProductListProps = {
 export type { Product };
 
 export default function ProductList({ products, loading, error, addToCart }: ProductListProps) {
+    const navigate = useNavigate();
+    const navigateToProductDetails = (productId: number) => {
+        navigate(`/product-details/${productId}`);
+    }
     return (
         <div className="product-list">
             {loading ? (
@@ -41,6 +46,7 @@ export default function ProductList({ products, loading, error, addToCart }: Pro
                             rating={product.rating}
                             productCount={product.productCount}
                             addtoCart={() => addToCart ? addToCart(product, true) : undefined}
+                            onDetailsClick={() => navigateToProductDetails(product.id)}
                         />
                     ))}
                 </div>

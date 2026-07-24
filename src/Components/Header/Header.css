@@ -66,6 +66,10 @@
 .header-nav a:hover::after {
     width: 100%;
 }
+.active span {
+    color: #667eea;
+    font-weight: 700;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
