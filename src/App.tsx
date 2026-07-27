@@ -5,13 +5,15 @@ import { Route, Router, Routes } from 'react-router-dom';
 import ProductDetails from './Pages/ProductDetails/ProductDetails';
 import Home from './Pages/Home/Home';
 import About from './Pages/About/About';
+import Registration from './Pages/Registration/Registration';
 import Cart from './Pages/Cart/Cart';
 
 function App() {
   let nameString = "Vite + React";
   let headerLinks: { name: string; href: string }[] = [
     { name: "Home", href: "/" },
-    { name: "About", href: "/about" }
+    { name: "About", href: "/about" },
+    { name: "Registration", href: "/registration" }
   ];
 
   return (
@@ -20,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/registration" element={<Registration />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product-details/:id" element={<ProductDetails />} />
       </Routes>
