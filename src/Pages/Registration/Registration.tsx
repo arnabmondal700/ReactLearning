@@ -60,10 +60,8 @@ export default function Registration() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error for the field being edited
-    if(name == 'email' && !/\S+@\S+\.\S+/.test(value)){
-      
-    }
-    else if (errors[name as keyof FormErrors]) {
+    validateForm();
+    if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
