@@ -1,5 +1,5 @@
 import "./Home.css";
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import ProductList from './../Products/Products';
 import type { Product } from './../Products/Products';
 
@@ -34,7 +34,7 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  const addToCart = (product: Product, value: boolean) => {
+  const addToCart = useCallback((product: Product, value: boolean) => {
     if (value) {
       // decrease stock of the product
       setAllProducts((prevAll) =>
@@ -59,7 +59,7 @@ export default function Home() {
         }
       });
     }
-  };
+  }, []);
 
   const removeFromCart = (product: Product) => {
     // increase stock of the product

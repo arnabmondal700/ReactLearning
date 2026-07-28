@@ -1,4 +1,5 @@
 import "./Cards.css";
+import { memo } from "react";
 type CardProps = {
     title: string;
     description: string;
@@ -12,7 +13,7 @@ type CardProps = {
     onDetailsClick?: () => void;
 };
 
-export default function Card({ title, description, image, rating, productCount, addtoCart, onDetailsClick }: CardProps) {
+const Card = memo(function Card({ title, description, image, rating, productCount, addtoCart, onDetailsClick }: CardProps) {
     const handleAddToCart = () => {
         if (addtoCart) {
         addtoCart();
@@ -38,4 +39,6 @@ export default function Card({ title, description, image, rating, productCount, 
             </button>
         </div>
     );
-}
+});
+
+export default Card;
