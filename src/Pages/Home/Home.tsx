@@ -1,5 +1,5 @@
 import "./Home.css";
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import ProductList from './../Products/Products';
 import type { Product } from './../Products/Products';
 
@@ -9,6 +9,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -112,8 +113,12 @@ export default function Home() {
           type="text"
           className="search-input"
           placeholder="Search products..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          ref={searchInputRef}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && searchInputRef.current) {
+              setSearchQuery(searchInputRef.current.value);
+            }
+          }}
         />
       </div>
       <div>
