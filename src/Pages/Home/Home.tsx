@@ -2,14 +2,15 @@ import "./Home.css";
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import ProductList from './../Products/Products';
 import type { Product } from './../Products/Products';
+import { useCart } from '../../Context/CartContext';
 
 export default function Home() {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [cartItems, setCartItems] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const { cartItems, addToCart: addToCartContext, removeFromCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -46,48 +47,10 @@ export default function Home() {
         )
       );
 
-      // Add to cart or increase cart quantity
-      setCartItems((prevCart) => {
-        const existingIndex = prevCart.findIndex((item) => item.title === product.title);
-        if (existingIndex !== -1 && 0 < product.productCount) {
-          return prevCart.map((item, index) =>
-            index === existingIndex ? { ...item, productCount: item.productCount + 1 } : item
-          );
-        } else if (product.productCount > 0) {
-          return [...prevCart, { ...product, productCount: 1 }];
-        } else {
-          return prevCart;
-        }
-      });
+      // Add to cart via reducer
+      addToCartContext(product);
     }
-  }, []);
-
-  const removeFromCart = (product: Product) => {
-    // increase stock of the product
-    setAllProducts((prevAll) =>
-      prevAll.map((p) =>
-        p.id === product.id
-          ? { ...p, productCount: p.productCount + 1 }
-          : p
-      )
-    );
-
-    // Decrease cart quantity or remove if 0
-    setCartItems((prevCart) => {
-      const existingIndex = prevCart.findIndex((item) => item.title === product.title);
-      if (existingIndex !== -1) {
-        const existingItem = prevCart[existingIndex];
-        if (existingItem.productCount > 1) {
-          return prevCart.map((item, index) =>
-            index === existingIndex ? { ...item, productCount: item.productCount - 1 } : item
-          );
-        } else {
-          return prevCart.filter((item) => item.title !== product.title);
-        }
-      }
-      return prevCart;
-    });
-  };
+  }, [addToCartContext]);
   const filteredProducts = useMemo(() => {
     return searchQuery
       ? allProducts.filter((product) =>

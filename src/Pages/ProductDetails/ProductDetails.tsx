@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Product } from "../Products/Products";
+import { useCart } from "../../Context/CartContext";
 import "./ProductDetails.css";
 
 export default function ProductDetails() {
@@ -9,6 +10,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -32,7 +34,7 @@ export default function ProductDetails() {
 
   const handleAddToCart = () => {
     if (productDetails) {
-      console.log(`Added ${productDetails.title} to cart`);
+      addToCart(productDetails);
       alert(`${productDetails.title} added to cart!`);
     }
   };

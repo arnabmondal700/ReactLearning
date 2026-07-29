@@ -13,7 +13,8 @@ function App() {
   let headerLinks: { name: string; href: string }[] = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Registration", href: "/registration" }
+    { name: "Registration", href: "/registration" },
+    { name: "Cart", href: "/cart" }
   ];
 
   return (
